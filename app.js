@@ -44,6 +44,6 @@ app.get('/boys',function (req,res){
 	});
 });
 
-app.listen(3000,function (){
-	console.log('listen on 3000');
-});
+var port =process.env.PORT || 3000;
+app.listen(port); 
+console.log("listening on port " + port +"\n");
