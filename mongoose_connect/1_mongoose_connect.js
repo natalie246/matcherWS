@@ -8,34 +8,47 @@ var User = mongoose.model('UserM', userSchema);
 //var girls = null;
 //var boys = null;
 
-var addUser = function(newUser){
+var addUser = function(newUser, callback){ //newUser is a fb object 
 
   var myNewUser = [];
 
   console.log('myNewUser -',myNewUser);
-    for(var i=0; i<newUser.data.length; i++)
-    {
-        if(newUser.data[i].gender != null)
+  var userSize = newUser;
+  console.log('size -',userSize);
+  //if(userSize.data){
+// find by user_id of newUser and if user_id exists don't save!!!
+// i'm not sure you need that for, couldn't find a reason for it. 
+  //  for(var i=0; i<newUser.data.length; i++)
+   // {
+var query = User.find();
+query.where(newUser.data.id);
+query.exec(function(err, user){
+  if(!user){
+     if(newUser.data.gender != null)
         {
-            myNewUser[i] = new User({   name:newUser.data[i].name,
-                                    id:newUser.data[i].id,
-                                    gender:newUser.data[i].gender,
-                                    picture:newUser.data[i].picture.data.url
+            myNewUser = new User({   name:newUser.data.name,
+                                    id:newUser.data.id,
+                                    gender:newUser.data.gender,
+                                    picture:newUser.data.picture.data.url
                                 });
 
-            myNewUser[i].save(function (err, doc) {
+            myNewUser.save(function (err, doc) {
               if(err){
                 if(err.code == 11000){
                   console.log('duplicate');
+                  callback(err); // if err addUser callback will return err and wont continue to next lines 
                 }  
+                if(doc)
+                {
+                callback(doc);
+                }
               }
-              else{
-                console.log('doc',doc);
-              }
+            
             });
         }
-    }
 
+  }
+})     
 }; 
          
 function updateGirls(callback)
@@ -44,10 +57,7 @@ function updateGirls(callback)
   var query_female = User.find().where('gender','female');
   query_female.exec(function(err,female_result)
   {
-    for(var i in female_result){
-      girls[i] = female_result[i].name;
-    }
-    callback(girls);   
+    callback(female_result);   
   });
 }
 
@@ -59,9 +69,7 @@ function updateGirls(callback)
   var query_male = User.find().where('gender','male');
   query_male.exec(function(err,male_result)
   {
-for(var i in male_result){
-    boys[i] = male_result[i].name;
-    }    callback(boys); 
+      callback(male_result); 
   });
 }
   
