@@ -52,6 +52,7 @@ app.get('/boys',function (req,res){
 	});
 });
 
+<<<<<<< HEAD:index_ws.js
 // app.get('/boysgirlsfilter',function (req,res){ 
 //     var urlPart= url.parse(req.url,true);
 //     console.log(urlPart);
@@ -63,6 +64,19 @@ app.get('/boys',function (req,res){
 
 // 		res.json(query.val);
 // });
+=======
+app.get('/boysgirlsfilter',function (req,res){ 
+    var urlPart= url.parse(req.url,true);
+    console.log(urlPart);
+    var query = urlPart.query;
+    console.log("url query:" + query);
+    console.log("!!!!!!!!!!!!! " + query.val1);
+    
+      console.log("!!!!!!!!!!!!! " + query.val2);
+
+		res.json(query.val);
+});
+>>>>>>> origin/master:index_ws.js
 
 
 
