@@ -21,15 +21,22 @@ var boys;
 var girls;
 
 
+app.get('/',function (req,res){
+	res.send("Welcome");
+});
+
+
 app.post('/user',function(req,res){
-	console.log("Im in app post");
+	//console.log("Im in app post");
 	//console.log('req.body',req.body);
 	add_User.addUser(req.body);
-	res.send('s');
+	//console.log(req.body);
+	res.send('success');
 });
 
 
 app.get('/girls',function (req,res){ 
+	app.set('json space',3);
 	add_User.updateGirls(function(girlList){
 		girls = girlList;
 		res.json(girls);
@@ -38,11 +45,26 @@ app.get('/girls',function (req,res){
 
 
 app.get('/boys',function (req,res){ 
+	app.set('json space',3);
 	add_User.updateBoys(function(boyList){
 		boys = boyList;
 		res.json(boys);
 	});
 });
+
+// app.get('/boysgirlsfilter',function (req,res){ 
+//     var urlPart= url.parse(req.url,true);
+//     console.log(urlPart);
+//     var query = urlPart.query;
+//     console.log("url query:" + query);
+//     console.log("!!!!!!!!!!!!! " + query.val1);
+    
+//       console.log("!!!!!!!!!!!!! " + query.val2);
+
+// 		res.json(query.val);
+// });
+
+
 
 var port =process.env.PORT || 3000;
 app.listen(port); 
