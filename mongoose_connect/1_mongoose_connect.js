@@ -39,9 +39,6 @@ var theUserExist = null;
             } 
     }
 
-
-  }
-})     
 }; 
     
          
@@ -51,7 +48,6 @@ function updateGirls(callback)
   var query_female = User.find().where('gender','female');
   query_female.exec(function(err,female_result)
   {  
-
     callback(female_result);   
   });
 }
@@ -63,7 +59,6 @@ function updateGirls(callback)
   query_male.exec(function(err,male_result)
   {
     callback(male_result); 
-
   });
 }
   
